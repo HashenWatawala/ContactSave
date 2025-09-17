@@ -1,17 +1,23 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
-const  errorHandler  = require('./middleware/errorhandler');
 const connectDB = require('./config/dbConnection');
+const errorHandler = require('./middleware/errorHandler');
+const contactRoutes = require('./routes/contactRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
 
 connectDB();
-const app = express();
 
-const port = process.env.PORT || 5000;  
+// Body parsers (required for req.body to work!)
+app.use(express.json()); // parses JSON
+app.use(express.urlencoded({ extended: true })); // parses form data
 
-app.use(express.json());
-app.use("/api/contacts", require('./routes/contactRoutes'));
+app.use('/api/contacts', contactRoutes);
+
+// Error handler middleware
 app.use(errorHandler);
 
-app.listen(port, ()=>{
-    console.log (`Server running on port ${port}`);
-} );
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

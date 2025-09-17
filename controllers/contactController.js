@@ -1,7 +1,11 @@
 const asyncHandler = require("express-async-handler");
-const getContacts = async (req, res) => {
-    res.status(200).json({message:'Hello World!'});
-};
+const Contact = require("../models/contactModel");
+
+
+const getContacts = asyncHandler(async (req, res) => {
+    const contacts = await Contact.find();
+    res.status(200).json(contacts);
+});
 const updateContact = asyncHandler(async (req, res) => {
     res.status(200).json({message:`Update a contact for ${req.params.id}`});
 });

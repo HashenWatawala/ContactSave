@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const contactSchema = mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        require: true ,
+        ref: "User",
+    },
     name: {
         type: String,
         required: [true, "Please add a name"],
@@ -8,7 +13,7 @@ const contactSchema = mongoose.Schema({
     email: {
         type: String,
         required: [true, "Please add an email"],
-        unique: true,
+        unique: false,
     },
     phone: {
         type: String,
